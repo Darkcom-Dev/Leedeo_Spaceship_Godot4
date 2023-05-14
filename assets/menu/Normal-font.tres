@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dxjonubxi13c2"]
+
+[ext_resource type="FontFile" uid="uid://boyvwwuse07i5" path="res://assets/hud/fonts/NokiaCellphoneFC.ttf" id="1_os7ka"]
+
+[resource]
+font = ExtResource("1_os7ka")
+font_color = Color(0.92549, 0.92549, 0.92549, 1)
+outline_size = 4
+outline_color = Color(0.192157, 0.192157, 0.192157, 1)

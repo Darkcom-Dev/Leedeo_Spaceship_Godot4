@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://2eci3xukb4x7"]
+
+[ext_resource type="Script" path="res://assets/player/shoot.gd" id="1_fts7h"]
+[ext_resource type="Texture2D" uid="uid://b3f6e0pahochc" path="res://assets/player/sprites/shot-1.png" id="1_uxyen"]
+[ext_resource type="Texture2D" uid="uid://cartgkbgwkqes" path="res://assets/player/sprites/shot-2.png" id="2_m7x26"]
+[ext_resource type="AudioStream" uid="uid://coq5xewlb28dn" path="res://assets/player/sounds/Shoot.ogg" id="3_4umx3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mhql7"]
+radius = 4.12311
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8v4qj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_uxyen")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_m7x26")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[node name="Shoot" type="Area2D" groups=["shoot"]]
+script = ExtResource("1_fts7h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("CircleShape2D_mhql7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_8v4qj")
+animation = &"shoot"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, 1.5)
+scale = Vector2(0.3, 0.85)
+
+[node name="Sfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_4umx3")
+autoplay = true
+
+[connection signal="area_entered" from="." to="." method="_on_Shoot_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_Visible_screen_exited"]

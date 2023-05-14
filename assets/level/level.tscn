@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://bqwlsgggpnx2a"]
+
+[ext_resource type="Script" path="res://assets/level/level.gd" id="1_s17pv"]
+[ext_resource type="Texture2D" uid="uid://da5baaib14tpg" path="res://assets/level/sprites/desert-backgorund.png" id="2_mrl4o"]
+[ext_resource type="Texture2D" uid="uid://bbbdfdvp1cbec" path="res://assets/level/sprites/clouds.png" id="3_2rxt6"]
+[ext_resource type="AudioStream" uid="uid://cyrsxfvfi3n44" path="res://assets/level/music/Common Fight.ogg" id="4_272re"]
+[ext_resource type="PackedScene" uid="uid://oad0010b1u8h" path="res://assets/player/player.tscn" id="5_ej1c2"]
+[ext_resource type="PackedScene" uid="uid://156waus20pph" path="res://assets/enemy/enemy.tscn" id="6_0dc22"]
+[ext_resource type="PackedScene" uid="uid://8bd8c6mch21p" path="res://assets/hud/hud.tscn" id="6_3jm73"]
+
+[sub_resource type="Curve2D" id="Curve2D_dika5"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 8, -5, 0, 0, 0, 0, 145, -5)
+}
+point_count = 2
+
+[node name="Level" type="Node2D" groups=["level"]]
+script = ExtResource("1_s17pv")
+Enemy = ExtResource("6_0dc22")
+
+[node name="Background" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Background"]
+motion_mirroring = Vector2(0, 272)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/ParallaxLayer"]
+texture = ExtResource("2_mrl4o")
+centered = false
+
+[node name="Clouds" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Clouds"]
+motion_mirroring = Vector2(0, 272)
+
+[node name="Sprite2D" type="Sprite2D" parent="Clouds/ParallaxLayer"]
+modulate = Color(1, 1, 1, 0.313726)
+texture = ExtResource("3_2rxt6")
+centered = false
+
+[node name="Clouds2" type="ParallaxBackground" parent="."]
+offset = Vector2(0, 120)
+transform = Transform2D(1, 0, 0, 1, 0, 120)
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Clouds2"]
+motion_mirroring = Vector2(0, 300)
+
+[node name="Sprite2D" type="Sprite2D" parent="Clouds2/ParallaxLayer"]
+modulate = Color(1, 1, 1, 0.470588)
+texture = ExtResource("3_2rxt6")
+centered = false
+flip_h = true
+
+[node name="BGM" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_272re")
+autoplay = true
+
+[node name="Player" parent="." instance=ExtResource("5_ej1c2")]
+position = Vector2(79, 224)
+
+[node name="EnemyTimer" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="EnemyPath" type="Path2D" parent="."]
+position = Vector2(0, 17)
+curve = SubResource("Curve2D_dika5")
+
+[node name="EnemySpawn" type="PathFollow2D" parent="EnemyPath"]
+position = Vector2(8, -5)
+
+[node name="HUD" parent="." instance=ExtResource("6_3jm73")]
+
+[connection signal="tree_exiting" from="Player" to="HUD" method="_on_Player_tree_exiting"]
+[connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
+[connection signal="game_over" from="HUD" to="." method="_on_hud_game_over"]

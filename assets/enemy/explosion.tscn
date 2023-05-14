@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://v8a5r3axwgfi"]
+
+[ext_resource type="Script" path="res://assets/enemy/explosion.gd" id="1_5ygok"]
+[ext_resource type="AudioStream" uid="uid://d2ue5eli2ypmw" path="res://assets/enemy/sounds/Explosion.ogg" id="1_scjht"]
+[ext_resource type="Texture2D" uid="uid://bpapj5ln3a4tg" path="res://assets/enemy/sprites/explosion-1.png" id="2_go6iy"]
+[ext_resource type="Texture2D" uid="uid://c53sils50vrwk" path="res://assets/enemy/sprites/explosion-2.png" id="3_uirhg"]
+[ext_resource type="Texture2D" uid="uid://c42bm6t14o8ox" path="res://assets/enemy/sprites/explosion-3.png" id="4_7tk5b"]
+[ext_resource type="Texture2D" uid="uid://wbx5x0u1vvw2" path="res://assets/enemy/sprites/explosion-4.png" id="5_fkpt2"]
+[ext_resource type="Texture2D" uid="uid://bdbxo4iiat7uc" path="res://assets/enemy/sprites/explosion-5.png" id="6_kxgy6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wyuwn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_go6iy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_uirhg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_7tk5b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_fkpt2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_kxgy6")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"explosion",
+"speed": 5.0
+}]
+
+[node name="Explosion" type="Node2D"]
+script = ExtResource("1_5ygok")
+
+[node name="sfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_scjht")
+
+[node name="explosion_anim" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_wyuwn")
+animation = &"explosion"
+
+[connection signal="finished" from="sfx" to="." method="_on_sfx_finished"]

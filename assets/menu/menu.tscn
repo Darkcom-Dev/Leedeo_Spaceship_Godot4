@@ -1,0 +1,98 @@
+[gd_scene load_steps=9 format=3 uid="uid://cswj1dluu7lgr"]
+
+[ext_resource type="AudioStream" uid="uid://d3tmcyh4ltmup" path="res://assets/menu/music/New Hope.ogg" id="1_gg12g"]
+[ext_resource type="Script" path="res://assets/menu/menu.gd" id="1_xwrjw"]
+[ext_resource type="Texture2D" uid="uid://bdon7h1c6yyii" path="res://assets/menu/sprites/background.png" id="2_16nio"]
+[ext_resource type="LabelSettings" uid="uid://n1qcskk2w5rq" path="res://assets/menu/Header-font.tres" id="4_82eco"]
+[ext_resource type="FontFile" uid="uid://boyvwwuse07i5" path="res://assets/hud/fonts/NokiaCellphoneFC.ttf" id="4_6384a"]
+[ext_resource type="LabelSettings" uid="uid://dxjonubxi13c2" path="res://assets/menu/Normal-font.tres" id="5_7hpoy"]
+[ext_resource type="Theme" uid="uid://cn8wcokylh0sb" path="res://assets/menu/LST_theme.tres" id="6_obq5m"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e06uf"]
+font = ExtResource("4_6384a")
+font_size = 8
+font_color = Color(0, 0.756863, 0.976471, 1)
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xwrjw")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_gg12g")
+autoplay = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_16nio")
+centered = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -171.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Leedeo" type="Label" parent="VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+text = "LEEDEO"
+label_settings = ExtResource("4_82eco")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spaceship" type="Label" parent="VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+text = "Spaceship"
+label_settings = ExtResource("5_7hpoy")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+theme = ExtResource("6_obq5m")
+text = "Start
+"
+flat = true
+
+[node name="Exit" type="Button" parent="VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+theme = ExtResource("6_obq5m")
+text = "Exit
+"
+flat = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -18.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_group_ = true
+
+[node name="Footer" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Developed by Leedeo studio"
+label_settings = SubResource("LabelSettings_e06uf")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_menu_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_menu_exit_pressed"]

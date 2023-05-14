@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://oad0010b1u8h"]
+
+[ext_resource type="Texture2D" uid="uid://cfahatfvaxbgg" path="res://assets/player/sprites/player-horizontal-1.png" id="1_bldmp"]
+[ext_resource type="Script" path="res://assets/player/player.gd" id="1_y3pnu"]
+[ext_resource type="PackedScene" uid="uid://2eci3xukb4x7" path="res://assets/player/shoot.tscn" id="2_ib8ed"]
+[ext_resource type="Texture2D" uid="uid://d3mgt76k4d1rg" path="res://assets/player/sprites/player-horizontal-2.png" id="2_kr64t"]
+[ext_resource type="Texture2D" uid="uid://miu5airqtnmb" path="res://assets/player/sprites/player-vertical-1.png" id="3_5ddii"]
+[ext_resource type="Texture2D" uid="uid://dbsv5r8pvfvvu" path="res://assets/player/sprites/player-vertical-2.png" id="4_j7r8w"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c37hn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_bldmp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_kr64t")
+}],
+"loop": true,
+"name": &"Horizontal",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5ddii")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_j7r8w")
+}],
+"loop": true,
+"name": &"Vertical",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uvlel"]
+radius = 9.0
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_y3pnu")
+Shoot = ExtResource("2_ib8ed")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_c37hn")
+animation = &"Vertical"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("CircleShape2D_uvlel")
+
+[node name="ShotSpawn" type="Marker2D" parent="."]
+position = Vector2(0, -12)
+
+[node name="ShootTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

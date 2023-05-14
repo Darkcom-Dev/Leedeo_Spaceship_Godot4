@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://156waus20pph"]
+
+[ext_resource type="Script" path="res://assets/enemy/Enemy.gd" id="1_cl4yy"]
+[ext_resource type="PackedScene" uid="uid://v8a5r3axwgfi" path="res://assets/enemy/explosion.tscn" id="2_bh5sa"]
+[ext_resource type="Texture2D" uid="uid://svajml2ckmxc" path="res://assets/enemy/sprites/enemy-1.png" id="2_lpqm4"]
+[ext_resource type="Texture2D" uid="uid://rlxpwox00vq2" path="res://assets/enemy/sprites/enemy-2.png" id="3_23m3r"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cunom"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_lpqm4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_23m3r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aelwv"]
+
+[node name="Enemy" type="Area2D" groups=["enemy"]]
+script = ExtResource("1_cl4yy")
+Explosion = ExtResource("2_bh5sa")
+
+[node name="AnimSpr" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_cunom")
+frame = 1
+frame_progress = 0.807115
+
+[node name="CollisionEnemy" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("CircleShape2D_aelwv")
+
+[node name="EnemyVisibility" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-1.19209e-07, 3.5)
+scale = Vector2(1.3, 1.25)
+
+[node name="ExplosionSpawn" type="Marker2D" parent="."]
+position = Vector2(0, 16)
+
+[connection signal="area_entered" from="." to="." method="_on_Enemy_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_Enemy_body_entered"]
+[connection signal="screen_exited" from="EnemyVisibility" to="." method="_on_enemy_visibility_screen_exited"]

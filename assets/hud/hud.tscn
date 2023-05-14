@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://8bd8c6mch21p"]
+
+[ext_resource type="AudioStream" uid="uid://eeitwmnqtqie" path="res://assets/hud/music/Game Over.ogg" id="1_mrvmv"]
+[ext_resource type="Script" path="res://assets/hud/hud.gd" id="1_wvqyp"]
+[ext_resource type="LabelSettings" uid="uid://dxjonubxi13c2" path="res://assets/menu/Normal-font.tres" id="2_anyvw"]
+[ext_resource type="LabelSettings" uid="uid://n1qcskk2w5rq" path="res://assets/menu/Header-font.tres" id="3_tx5b7"]
+[ext_resource type="Theme" uid="uid://cn8wcokylh0sb" path="res://assets/menu/LST_theme.tres" id="4_ln2cr"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_wvqyp")
+
+[node name="GameOverBGM" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_mrvmv")
+
+[node name="score_container" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ScoreContainer" type="HBoxContainer" parent="score_container"]
+layout_mode = 2
+
+[node name="Score" type="Label" parent="score_container/ScoreContainer"]
+texture_filter = 1
+layout_mode = 2
+text = "Score: "
+label_settings = ExtResource("2_anyvw")
+
+[node name="Points" type="Label" parent="score_container/ScoreContainer"]
+texture_filter = 1
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("2_anyvw")
+
+[node name="GameOverContainer" type="VBoxContainer" parent="."]
+visible = false
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOver" type="Label" parent="GameOverContainer"]
+texture_filter = 1
+layout_mode = 2
+text = "Game Over"
+label_settings = ExtResource("3_tx5b7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuContainer" type="HBoxContainer" parent="GameOverContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Restart" type="Button" parent="GameOverContainer/MenuContainer"]
+texture_filter = 1
+layout_mode = 2
+theme = ExtResource("4_ln2cr")
+text = "Restart"
+
+[node name="Exit" type="Button" parent="GameOverContainer/MenuContainer"]
+texture_filter = 1
+layout_mode = 2
+theme = ExtResource("4_ln2cr")
+text = "Exit"
+
+[connection signal="pressed" from="GameOverContainer/MenuContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="GameOverContainer/MenuContainer/Exit" to="." method="_on_exit_pressed"]
