@@ -6,7 +6,7 @@ const SPEED = 100
 
 @onready var motion = Vector2.ZERO
 @onready var can_shoot : bool = true
-@onready var screensize = get_viewport_rect().size # Tamaño de muestra de la ventana
+@export var screensize : Vector2 # Tamaño de muestra de la ventana
 
 @onready var animation : AnimatedSprite2D = $AnimatedSprite2D
 @onready var shootSpawn : Marker2D = $ShotSpawn
@@ -41,6 +41,8 @@ func motion_ctrl():
 		
 	position.x = clamp(position.x, 8, screensize.x -8)
 	position.y = clamp(position.y, 12, screensize.y -12)
+	
+	GLOBAL.player_pos = position;
 	
 func animation_ctrl():
 	if get_axis().x == 1:
